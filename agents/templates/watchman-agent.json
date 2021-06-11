@@ -1,0 +1,5 @@
+{
+  "watchman_backdoor": "${watchman_backdoor}",
+  "client_key": "${client_key}",
+  "client_secret": "${client_secret}"
+}

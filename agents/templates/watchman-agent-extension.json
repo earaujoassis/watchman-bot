@@ -1,0 +1,9 @@
+{
+  "watchman_backdoor": "${watchman_backdoor}",
+  "client_key": "${client_key}",
+  "client_secret": "${client_secret}",
+  "github_token": "${github_token}",
+  "master": {
+    "location": "${master_folder_location}"
+  }
+}
