@@ -13,7 +13,16 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/earaujoassis/watchman-bot",
-    packages=setuptools.find_packages(exclude=['apps', 'bin', 'db', 'lib', 'node_modules', 'public', 'spec', 'web']),
+    packages=setuptools.find_packages(exclude=[
+        'internal',
+        '.editorconfig',
+        '.gitignore',
+        '.tool-versions',
+        '.travis.yml',
+        'go.mod',
+        'go.sum',
+        'main.go',
+    ]),
     install_requires=[
         'Mako',
         'argparse',
