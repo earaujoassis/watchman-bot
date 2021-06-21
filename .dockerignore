@@ -1,0 +1,15 @@
+.DS_Store
+.git
+.vscode
+agents
+scripts
+venv
+.editorconfig
+.gitignore
+.tool-versions
+.travis.yml
+Dockerfile
+MANIFEST.in
+requirements.txt
+setup.cfg
+setup.py
