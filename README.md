@@ -1,4 +1,4 @@
-# Watchman (Bot or Agents)
+# Watchman (Bot or Agents) [![Build Status](https://travis-ci.com/earaujoassis/watchman-bot.svg?branch=master)](https://travis-ci.com/earaujoassis/watchman-bot)
 
 > Watchman helps to keep track of automating services; a tiny bot
 
