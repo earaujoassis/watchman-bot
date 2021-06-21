@@ -12,6 +12,7 @@ import (
     "github.com/earaujoassis/watchman-bot/internal/utils"
 )
 
+// ActionCreateRequestor make a request to the watchman server to create new actions
 func ActionCreateRequestor(requestData utils.H) (utils.H, error) {
     payload := ActionPayload{
         ManagedRealm: requestData["managed_realm"].(string),
@@ -32,8 +33,8 @@ func ActionCreateRequestor(requestData utils.H) (utils.H, error) {
         log.Fatal(fmt.Sprintf("Error: %s", err))
     }
 
-    baseUrl := baseUrl()
-    url := fmt.Sprintf("%s/api/applications/%s/actions", baseUrl, requestData["application_id"])
+    baseURL := baseURL()
+    url := fmt.Sprintf("%s/api/applications/%s/actions", baseURL, requestData["application_id"])
 
     httpRequest, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {

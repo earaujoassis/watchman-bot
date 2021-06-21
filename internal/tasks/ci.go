@@ -10,6 +10,7 @@ import (
     "github.com/earaujoassis/watchman-bot/internal/utils"
 )
 
+// Integration handles tasks performed within a CI environment
 func Integration(command string, data utils.H) (utils.H, error) {
     var result utils.H
     var err error = nil

@@ -7,9 +7,9 @@ import (
     "github.com/earaujoassis/watchman-bot/internal/utils"
 )
 
-func baseUrl() string {
+func baseURL() string {
     utils.SanityChecker()
-    return os.Getenv(utils.BaseUrlEnvVar)
+    return os.Getenv(utils.BaseURLEnvVar)
 }
 
 func authorizationBearer() string {
