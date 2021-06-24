@@ -1,26 +1,9 @@
 .DS_Store
-node_modules
 coverage
 .env
 .git
-.sass-cache
 tmp
 log
-package-lock.json
+docs
 
-# Agents
-build/
-dist/
-venv/
-.vscode
-*.egg-info/
-*.egg
-*.py[cod]
-*$py.class
-__pycache__/
-*.so
-*~
-.tox
-.cache
-.pytest_cache
-.coverag
+configs/ca.crt
