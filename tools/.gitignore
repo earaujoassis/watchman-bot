@@ -1,0 +1,16 @@
+# Agents
+build/
+dist/
+venv/
+.vscode
+*.egg-info/
+*.egg
+*.py[cod]
+*$py.class
+__pycache__/
+*.so
+*~
+.tox
+.cache
+.pytest_cache
+.coverag

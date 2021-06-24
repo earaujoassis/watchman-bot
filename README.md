@@ -2,6 +2,16 @@
 
 > Watchman helps to keep track of automating services; a tiny bot
 
+## Robots
+
+Robots are running processes inside continuous integration services. They create actions to be
+performed by the Watchman Server or Watchman Agents.
+
+```sh
+$ docker build -t earaujoassis/watchman-bot .
+$ docker run -i --rm --name bot --env WATCHMAN_BOT_BASE_URL=${BOT_URL} --env WATCHMAN_BOT_CLIENT_KEY=${BOT_KEY} --env WATCHMAN_BOT_CLIENT_SECRET=${BOT_SECRET} earaujoassis/watchman-bot:latest ci help
+```
+
 ## Agents
 
 Agents are running services inside each deployable server. They listen to the Watchman-Backdoor
@@ -19,7 +29,7 @@ $ pip install --user https://github.com/earaujoassis/watchman/archive/v0.2.4.zip
 
 If you need any help, please run `agent --help`.
 
-### Developing agents
+### Developing agents (under tools)
 
 In order to create a sandbox (virtual environment) and install it for development or testing, you may
 run the following commands:
