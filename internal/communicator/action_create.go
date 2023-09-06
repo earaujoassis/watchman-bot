@@ -63,14 +63,14 @@ func ActionCreateRequestor(requestData utils.H) (utils.H, error) {
 				}
 			}
 			tlsConfig = &tls.Config{
-				InsecureSkipVerify: true,
+				InsecureSkipVerify: false,
 				RootCAs:            rootCertificates,
 			}
 			tr = &http.Transport{TLSClientConfig: tlsConfig}
 			client = &http.Client{Transport: tr}
 		} else {
 			tlsConfig = &tls.Config{
-				InsecureSkipVerify: false,
+				InsecureSkipVerify: true,
 			}
 			tr = &http.Transport{TLSClientConfig: tlsConfig}
 			client = &http.Client{Transport: tr}
