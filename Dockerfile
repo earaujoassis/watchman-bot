@@ -12,7 +12,8 @@ WORKDIR /opt/watchman
 
 COPY . /opt/watchman
 
-RUN go build -o watchman-bot main.go
+RUN rm -rf cmd && mkdir -p cmd
+RUN CGO_ENABLED=0 go build -o cmd/ ./...
 
-ENTRYPOINT [ "./watchman-bot" ]
+ENTRYPOINT [ "cmd/watchman-bot" ]
 CMD [ "help" ]
