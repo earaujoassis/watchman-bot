@@ -1,4 +1,4 @@
-FROM golang:1.16.5-alpine3.13
+FROM golang:1.19.12-alpine3.18
 
 LABEL "com.quatrolabs.watchman"="quatroLABS Watchman"
 LABEL "description"="Watchman helps to keep track of automating services; a tiny bot"
