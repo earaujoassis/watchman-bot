@@ -1,8 +1,8 @@
 package tasks
 
 const (
-    // Command types
+	// Command types
 
-    // GitOpsUpdater command type
-    GitOpsUpdater           string = "git-ops-updater"
+	// GitOpsUpdater command type
+	GitOpsUpdater string = "git-ops-updater"
 )

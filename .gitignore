@@ -1,9 +1,8 @@
 .DS_Store
+.git/
+.vscode/
+cmd/
 coverage
 .env
-.git
 tmp
 log
-docs
-
-configs/ca.crt
