@@ -6,7 +6,6 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"errors"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -20,6 +19,8 @@ import (
 // ActionCreateRequestor make a request to the watchman server to create new actions
 func ActionCreateRequestor(requestData utils.H) (utils.H, error) {
 	var client *http.Client
+	var tlsConfig *tls.Config
+	var tr *http.Transport
 
 	payload := ActionPayload{
 		ManagedRealm:   requestData["managed_realm"].(string),
@@ -44,35 +45,36 @@ func ActionCreateRequestor(requestData utils.H) (utils.H, error) {
 	url := fmt.Sprintf(actionCreatePath, baseURL, requestData["application_id"])
 
 	if strings.HasPrefix(url, "https") {
-		insecureSSLFlag := flag.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
-		flag.Parse()
-
-		rootCertificates, _ := x509.SystemCertPool()
-		if rootCertificates == nil {
-			rootCertificates = x509.NewCertPool()
-		}
-
-		if _, err := os.Stat(localCertificateFile); os.IsNotExist(err) {
-			log.Println("Custom certificate file doesn't exist")
+		if verify := os.Getenv("WATCHMAN_BOT_SSL_VERIFY"); verify == "1" {
+			rootCertificates, _ := x509.SystemCertPool()
+			if rootCertificates == nil {
+				rootCertificates = x509.NewCertPool()
+			}
+			if _, err := os.Stat(localCertificateFile); os.IsNotExist(err) {
+				log.Println("Custom certificate file doesn't exist")
+			} else {
+				log.Println("Custom certificate file found; loading it")
+				certificates, err := ioutil.ReadFile(localCertificateFile)
+				if err != nil {
+					log.Fatalf("Failed to append %q to RootCAs: %v", localCertificateFile, err)
+				}
+				if ok := rootCertificates.AppendCertsFromPEM(certificates); !ok {
+					log.Println("No certificates appended, using system certificates only")
+				}
+			}
+			tlsConfig = &tls.Config{
+				InsecureSkipVerify: true,
+				RootCAs:            rootCertificates,
+			}
+			tr = &http.Transport{TLSClientConfig: tlsConfig}
+			client = &http.Client{Transport: tr}
 		} else {
-			log.Println("Custom certificate file found; loading it")
-			certificates, err := ioutil.ReadFile(localCertificateFile)
-			if err != nil {
-				log.Fatalf("Failed to append %q to RootCAs: %v", localCertificateFile, err)
+			tlsConfig = &tls.Config{
+				InsecureSkipVerify: false,
 			}
-
-			if ok := rootCertificates.AppendCertsFromPEM(certificates); !ok {
-				log.Println("No certificates appended, using system certificates only")
-			}
+			tr = &http.Transport{TLSClientConfig: tlsConfig}
+			client = &http.Client{Transport: tr}
 		}
-
-		config := &tls.Config{
-			InsecureSkipVerify: *insecureSSLFlag,
-			RootCAs:            rootCertificates,
-		}
-
-		tr := &http.Transport{TLSClientConfig: config}
-		client = &http.Client{Transport: tr}
 	} else {
 		client = &http.Client{}
 	}
