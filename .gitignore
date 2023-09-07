@@ -4,5 +4,6 @@
 cmd/
 coverage
 .env
+.watchmanbotrc
 tmp
 log

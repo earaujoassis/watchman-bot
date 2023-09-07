@@ -7,9 +7,11 @@ import (
 
 	"github.com/earaujoassis/watchman-bot/internal/tasks"
 	"github.com/earaujoassis/watchman-bot/internal/utils"
+	"github.com/earaujoassis/watchman-bot/internal/config"
 )
 
 func main() {
+	config.LoadConfig()
 	app := cli.NewApp()
 	app.Name = "bot"
 	app.Usage = "Watchman helps to keep track of automating services; a tiny bot"
@@ -45,6 +47,7 @@ func main() {
 						},
 					},
 					Action: func(c *cli.Context) error {
+						config.LoadConfig()
 						tasks.Integration(
 							tasks.GitOpsUpdater,
 							utils.H{

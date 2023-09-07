@@ -13,6 +13,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/earaujoassis/watchman-bot/internal/config"
 	"github.com/earaujoassis/watchman-bot/internal/utils"
 )
 
@@ -21,6 +22,8 @@ func ActionCreateRequestor(requestData utils.H) (utils.H, error) {
 	var client *http.Client
 	var tlsConfig *tls.Config
 	var tr *http.Transport
+
+	cfg := config.GetConfig()
 
 	payload := ActionPayload{
 		ManagedRealm:   requestData["managed_realm"].(string),
@@ -41,25 +44,19 @@ func ActionCreateRequestor(requestData utils.H) (utils.H, error) {
 		log.Fatal(fmt.Sprintf("Error: %s", err))
 	}
 
-	baseURL := baseURL()
-	url := fmt.Sprintf(actionCreatePath, baseURL, requestData["application_id"])
+	url := fmt.Sprintf(actionCreatePath, cfg.BaseUrl, requestData["application_id"])
 
 	if strings.HasPrefix(url, "https") {
-		if verify := os.Getenv("WATCHMAN_BOT_SSL_VERIFY"); verify == "1" {
+		if cfg.Http.VerifySsl {
 			rootCertificates, _ := x509.SystemCertPool()
 			if rootCertificates == nil {
 				rootCertificates = x509.NewCertPool()
 			}
-			if _, err := os.Stat(localCertificateFile); os.IsNotExist(err) {
-				log.Println("Custom certificate file doesn't exist")
-			} else {
-				log.Println("Custom certificate file found; loading it")
-				certificates, err := ioutil.ReadFile(localCertificateFile)
-				if err != nil {
-					log.Fatalf("Failed to append %q to RootCAs: %v", localCertificateFile, err)
-				}
-				if ok := rootCertificates.AppendCertsFromPEM(certificates); !ok {
-					log.Println("No certificates appended, using system certificates only")
+			if _, err := os.Stat(cfg.Http.CertificatePath); !os.IsNotExist(err) {
+				certificates, err := ioutil.ReadFile(cfg.Http.CertificatePath)
+				if err == nil {
+					rootCertificates.AppendCertsFromPEM(certificates)
+					log.Println("Custom certificate added")
 				}
 			}
 			tlsConfig = &tls.Config{

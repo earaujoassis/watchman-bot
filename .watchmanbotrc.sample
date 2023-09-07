@@ -1,0 +1,7 @@
+base_url = ""
+client_key = ""
+client_secret = ""
+
+[http]
+verify_ssl = true
+certificate_path = ""
