@@ -9,7 +9,6 @@ RUN mkdir -p /opt
 RUN mkdir -p /opt/watchman
 
 WORKDIR /opt/watchman
-
 COPY . /opt/watchman
 
 RUN rm -rf cmd && mkdir -p cmd

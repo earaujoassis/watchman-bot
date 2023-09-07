@@ -2,20 +2,14 @@ package communicator
 
 import (
 	"encoding/base64"
-	"os"
 
-	"github.com/earaujoassis/watchman-bot/internal/utils"
+	"github.com/earaujoassis/watchman-bot/internal/config"
 )
 
-func baseURL() string {
-	utils.SanityChecker()
-	return os.Getenv(utils.BaseURLEnvVar)
-}
-
 func authorizationBearer() string {
-	utils.SanityChecker()
-	key := os.Getenv(utils.ClientKeyEnvVar)
-	secret := os.Getenv(utils.ClientSecretEnvVar)
+	cfg := config.GetConfig()
+	key := cfg.ClientKey
+	secret := cfg.ClientSecret
 	authorization := key + ":" + secret
 	encodedAuth := base64.StdEncoding.EncodeToString([]byte(authorization))
 	return encodedAuth
