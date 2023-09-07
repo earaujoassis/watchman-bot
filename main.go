@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	config.LoadConfig()
 	app := cli.NewApp()
 	app.Name = "bot"
 	app.Usage = "Watchman helps to keep track of automating services; a tiny bot"
