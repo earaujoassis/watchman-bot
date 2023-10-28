@@ -1,6 +1,6 @@
 FROM golang:1.19.12-alpine3.18
 
-LABEL "com.quatrolabs.watchman"="quatroLABS Watchman"
+LABEL "com.quatrolabs.watchman-bot"="quatroLABS Watchman"
 LABEL "description"="Watchman helps to keep track of automating services; a tiny bot"
 
 ENV GO111MODULE=on
